@@ -28,8 +28,7 @@
 				Member loginMember = (Member)session.getAttribute("loginMember");
 		%>
 				<div>반갑습니다. <%=loginMember.getMemberName()%>님</div> 
-				<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></div>
-				<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectMemberOne.jsp">회원상세보기</a></div>		
+				<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></div>		
 		<% 		
 				// memberLevel이 1(관리자)일때만 관리자 페이지로 들어가기
 				if(loginMember.getMemberLevel() > 0) {

@@ -7,6 +7,51 @@ import vo.Member;
 
 public class MemberDao {
 	
+	// (11) [관리자] 회원상세보기 코드
+	public ArrayList<Member> selectMemberOne(int memberNo) throws ClassNotFoundException, SQLException {
+		// selectMemberOne메소드의 memberNo 입력값 확인
+		System.out.println("[debug] memberNo param 확인 -> " + memberNo);
+		
+		// maria db 사용 및 접속
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		// 쿼리 생성
+		// 쿼리문 : member 테이블에서 member_no가 ?(memberNo)일때, create_date 값을 내림차순으로 memberNo, memberId, memberLevel, memberAge, memberGender, updateDate, createDate 항목을 조회하여라.
+		String sql = "SELECT member_no memberNo, member_id memberId, member_level memberLevel, member_name memberName, member_age memberAge, member_gender memberGender, update_date updateDate, create_date createDate FROM member WHERE member_no=? ORDER BY create_date DESC";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, memberNo);
+		System.out.println("[debug] stmt 확인 -> " + stmt);
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		// 11.1) Member 클래스 배열 객체 생성
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		while(rs.next()) {
+			// 11.2) Member 클래스 객체 생성
+			Member returnMember = new Member();
+			returnMember.setMemberNo(rs.getInt("memberNo"));
+			returnMember.setMemberId(rs.getString("memberId"));
+			returnMember.setMemberLevel(rs.getInt("memberLevel"));
+			returnMember.setMemberName(rs.getString("memberName"));
+			returnMember.setMemberAge(rs.getInt("memberAge"));
+			returnMember.setMemberGender(rs.getString("memberGender"));
+			returnMember.setUpdateDate(rs.getString("updateDate"));
+			returnMember.setCreateDate(rs.getString("createDate"));
+			list.add(returnMember);
+		}
+		System.out.println("[debug] list 확인 -> " + list);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;			
+	}
+	
 	// (10) [회원] 회원가입 전 중복 아이디 검사 코드
 	public String selectMemberIdCheck(String memberIdCheck) throws ClassNotFoundException, SQLException {
 		// selectMemberIdCheck메소드의 memberIdCheck 입력값 확인

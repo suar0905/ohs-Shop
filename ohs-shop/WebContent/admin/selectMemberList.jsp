@@ -5,6 +5,7 @@
 <%
 	//한글 깨짐 방지
 	request.setCharacterEncoding("utf-8");
+
 	// (1) Member클래스 객체 생성, (로그인 하지 못한 사람)과 (로그인을 했더라도 memberLevel이 1보다 작은 사람)은 들어오지 못하게 하는 코드
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	if(loginMember == null || loginMember.getMemberLevel() < 1){
@@ -101,10 +102,7 @@
 					<th>memberId</th>
 					<th>memberLevel</th>
 					<th>memberName</th>
-					<th>memberAge</th>
-					<th>memberGender</th>
-					<th>updateDate</th>
-					<th>createDate</th>
+					<th>회원상세보기</th>
 					<th>회원등급 수정</th>
 					<th>회원비밀번호 수정</th>
 					<th>회원탈퇴</th>
@@ -132,10 +130,7 @@
 								%>
 							</td>
 							<td><%=m.getMemberName()%></td>
-							<td><%=m.getMemberAge()%></td>
-							<td><%=m.getMemberGender()%></td>
-							<td><%=m.getUpdateDate()%></td>
-							<td><%=m.getCreateDate()%></td>
+							<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/selectMemberOne.jsp?memberNo=<%=m.getMemberNo()%>">회원상세보기</a></td>
 							<td>
 								<!-- 특정 회원등급을 수정한다. -->
 								<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원등급 수정</a>
