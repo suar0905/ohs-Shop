@@ -74,8 +74,20 @@
 						<td>
 							<form action="<%=request.getContextPath()%>/admin/updateCategoryStateAction.jsp?categoryName=<%=c.getCategoryName()%>" method="post">
 								<select name="categoryState">
-									<option value="Y">Y</option>
-									<option value="N">N</option>
+								<!-- 해당 카테고리 상태값이 카테고리 상태유무 기본값으로 지정되게 표시 설정 -->
+								<%
+									if(c.getCategoryState().equals("Y")) {
+								%>
+										<option value="Y" selected="selected">Y</option>
+										<option value="N">N</option>
+								<% 		
+									} else {
+								%>
+										<option value="Y">Y</option>
+										<option value="N" selected="selected">N</option>
+								<% 		
+									}
+								%>
 								</select>
 								<input class="btn btn-outline-dark" type="submit" value="수정하기">
 							</form>
